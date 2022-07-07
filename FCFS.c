@@ -60,7 +60,8 @@ float awt=0,atat=0;
       awt=awt+wt[i];
       atat=atat+TAT[i]; 
    }
-      printf("avg waiting time = %f\n",awt/process);
-
-         printf("avg turn around time = %f",atat/process);
+   printf("total waiting time = %f \n",awt);
+   printf("total turn around time = %f \n",atat);
+   printf("avg waiting time = %f\n",awt/process);
+   printf("avg turn around time = %f",atat/process);
 }
