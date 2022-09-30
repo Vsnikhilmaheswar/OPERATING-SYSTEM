@@ -64,4 +64,14 @@ float awt=0,atat=0;
    printf("total turn around time = %f \n",atat);
    printf("avg waiting time = %f\n",awt/process);
    printf("avg turn around time = %f",atat/process);
+ printf("\n");
+   printf("______________________________\n");
+   printf("|0 ");
+   for(i=0;i<process;i++)
+   {
+   printf("p%d  %d|",i,TAT[i]);
+   
+   } 
+printf("\n");
+printf("-------------------------------");
 }
