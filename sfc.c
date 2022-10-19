@@ -1,52 +1,58 @@
-#include <stdio.h>
+#include<stdio.h>
+struct sjf
+{
+    int pid;
+    int btime;
+    int wtime;
+    int ttime;
+}
+p[10];
 int main()
 {
-  int A[100][4]; 
-  int i, j, n, total1 = 0, index, temp;
-  float avg_wt, avg_tat;
-  printf("Enter number of process: ");
-  scanf("%d", &n);
-  printf("Enter Burst Time:\n");
- 
-  for (i = 0; i < n; i++) {
-    printf("P%d: ", i + 1);
-    scanf("%d", &A[i][1]);
-    A[i][0] = i + 1;
-  }
- 
-  for (i = 0; i < n; i++) {
-    index = i;
-    for (j = i + 1; j < n; j++)
-      if (A[j][1] < A[index][1])
-        index = j;
-    temp = A[i][1];
-    A[i][1] = A[index][1];
-    A[index][1] = temp;
+    int i,n,j;
+    struct sjf tmp;
+    int totwtime=0,totttime=0;
+    printf("enter the number of process");
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        printf("enter process id: P");
+        scanf("%d",&p[i].pid);
+        printf("enter burst time");
+        scanf("%d",&p[i].btime);
+    }
+    p[0].wtime=0;
+    p[0].ttime=p[0].btime;
+    for ( i = 0; i <n-1; i++)
+    {
+        for(j=i+1;j<n;j++)
+        {
+            if(p[i].btime>p[j].btime)
+            {
+             tmp=p[i];
+             p[i]=p[j];
+             p[j]=tmp;
+            }
+        }
+    }
+    for ( i = 0; i < n; i++)
+    {
+        p[i].wtime=p[i-1].wtime+p[i-1].btime;
+        p[i].ttime=p[i].wtime+p[i].btime;
+        totttime+=p[i].ttime;
+        totwtime+=p[i].wtime;
+    }
 
-    temp = A[i][0];
-    A[i][0] = A[index][0];
-    A[index][0] = temp;
-  }
-  A[0][2] = 0;
-  
-  for (i = 1; i < n; i++) {
-    A[i][2] = 0;
-    for (j = 0; j < i; j++)
-      A[i][2] += A[j][1];
-    total1 += A[i][2];
-  }
-  avg_wt = (float)total1 / n;
-  int total2 = 0;
-  printf("P   BT   WT   TAT\n");
-   for (i = 0; i < n; i++) {
-    A[i][3] = A[i][1] + A[i][2];
-    total2+= A[i][3];
-    printf("P%d   %d   %d   %d\n", A[i][0],
-      A[i][1], A[i][2], A[i][3]);
-  }
-  avg_tat = (float)total2 / n;
-  printf("total waiting time = %d \n",total1);
-  printf("total Turnaround time = %d \n",total2);
-  printf("Average Waiting Time= %f ", avg_wt);
-  printf("\nAverage Turnaround Time= %f", avg_tat);
+    printf("pid     burst   wt    tat\n");
+for ( i = 0; i < n; i++)
+{
+printf("%d    %d     %d     %d\n",p[i].pid,p[i].btime,p[i].wtime,p[i].ttime);
+}
+printf("\n");
+   printf("0 ");
+    for(i=0;i<n;i++)
+    {
+        printf(" p%d | %d ",p[i].pid,p[i].ttime);
+    }
+     
 }
