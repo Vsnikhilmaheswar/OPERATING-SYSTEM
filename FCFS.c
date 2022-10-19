@@ -4,74 +4,50 @@
 //PROGRAM : FCFS IMPLEMENTATION //
 //******************************//
 #include<stdio.h>
-int wt[4];
-int TAT[3];
-void WAIT(int process,int bur[])//calculating waiting time
-{
-int i;
-wt[0]=0;
-for(i=1;i<process;i++)
-{
-wt[i]=wt[i-1]+bur[i-1];
-}
-}
-void TURNATIME(int process,int burstt[]) // calculating the turn around time
-{
-    int K,sum=0;
-        
-    for ( K= 0; K < process; K++)
-    {
-      sum=sum+burstt[K];
-      TAT[K]=sum;   
-    }
+#include <stdlib.h>
+struct fcfs {
+    
+    int pid;
+    int btime;
+    int wtime;
+    int ttime;
     
 }
 
-
-void display(int wt[],int process,int burst[],int TAT[]) // display the results
-{
-    int j;
- printf("PROCESS         BURST          W.T          T.A.T\n");
-
-    for ( j = 0; j < process; j++)
-{
-    printf("%d\t\t%d\t\t%d\t\t%d",j,burst[j],wt[j],TAT[j]);
-    printf("\n");
-}
-}
-// main funtion
-int main()
-{   int process;
-    printf("enter the number of process");
-    scanf("%d",&process);
-    int i, burst[process];
-    printf("enter the %d process",process);
-    for ( i = 0; i <process; i++)
+   p[10];
+    int main() {
+        
+        int i,n;
+        int totwtime = 0, totttime = 0;
+        printf("\n FCFS SCHEDULING...\n");
+        printf("Enter the num of process");
+        scanf("%d",&n);
+        for(i=0;i<n;i++)
+        {
+            printf("enter the process id ");
+            scanf("%d",&p[i].pid);
+            printf( " Burst time of the process");
+            scanf("%d",&p[i].btime);    
+        }
+       
+        
+    for (i = 0; i <n; i++)
     {
-        scanf("%d",&burst[i]);
+     
+    
+    
+            p[i].wtime=p[i-1].wtime+p[i-1].btime;
+            p[i].ttime=p[i].wtime+p[i].btime;
+            totttime+=p[i].ttime;
+            totwtime+=p[i].wtime;
+    }    
+    printf("0 ");
+    for(i=0;i<n;i++)
+    {
+        printf(" p%d | %d ",p[i].pid,p[i].ttime);
     }
-float awt=0,atat=0;
-    WAIT(process,burst);
-       TURNATIME(process,burst);
-   display(wt,process,burst,TAT);
-
-   for ( i = 0; i < process; i++)
-   {
-      awt=awt+wt[i];
-      atat=atat+TAT[i]; 
-   }
-   printf("total waiting time = %f \n",awt);
-   printf("total turn around time = %f \n",atat);
-   printf("avg waiting time = %f\n",awt/process);
-   printf("avg turn around time = %f",atat/process);
- printf("\n");
-   printf("______________________________\n");
-   printf("|0 ");
-   for(i=0;i<process;i++)
-   {
-   printf("p%d  %d|",i,TAT[i]);
-   
-   } 
-printf("\n");
-printf("-------------------------------");
-}
+        printf("\n Total waiting time:%d\n",totwtime);
+        printf("\n Average waiting time:%d\n",totwtime/n);
+        printf("\n Total turn around time:%d\n",totttime);
+        printf("\n Average turn around time:%d\n",totwtime/n);
+    }
